@@ -1,0 +1,7 @@
+
+.main.data-v-1cf27b2a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: red;
+}

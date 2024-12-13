@@ -11,6 +11,7 @@
     "minified": true,
     "newFeature": true,
     "bigPackageSizeSupport": true,
+    "packNpmRelationList": [],
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -19,7 +20,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.7.1",
-  "appid": "touristappid",
+  "appid": "wxebf432ee1e84f731",
   "projectname": "uni-components",
   "condition": {},
   "editorSetting": {

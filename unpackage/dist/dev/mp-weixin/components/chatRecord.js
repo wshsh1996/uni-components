@@ -3,13 +3,13 @@ const common_vendor = require("../common/vendor.js");
 const _sfc_main = {
   __name: "chatRecord",
   setup(__props) {
+    const record = common_vendor.index.getRecorderManager();
     const state = common_vendor.reactive({
       isTalking: false,
       // 是否正在讲话
       sendLock: false,
       // 语音是否发送锁，true-不发送，false-发送（用于上滑取消发送）
-      record: null,
-      // 语音对象
+      // record: null, // 语音对象
       startPoint: {}
       //记录长按录音开始点信息,用于后面计算滑动距离。
     });
@@ -19,18 +19,18 @@ const _sfc_main = {
       };
       console.log("start");
       state.isTalking = true;
-      state.record.start(option);
-      state.record.onStart((res) => {
+      record.start(option);
+      record.onStart((res) => {
         console.log("start", res);
       });
-      state.record.onError((res) => {
+      record.onError((res) => {
         console.log("录音错误事件：", res);
       });
     };
     const onEnd = () => {
       state.isTalking = false;
-      state.record.stop();
-      state.record.onStop((res) => {
+      record.stop();
+      record.onStop((res) => {
         console.log(res, "录音回调地址");
         if (state.sendLock) {
           state.sendLock = false;
@@ -61,7 +61,6 @@ const _sfc_main = {
       }
     };
     common_vendor.onLoad(() => {
-      state.record = common_vendor.index.getRecorderManager();
     });
     return (_ctx, _cache) => {
       return common_vendor.e({

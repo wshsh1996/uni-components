@@ -38,10 +38,11 @@
 import { reactive } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 
+const record = uni.getRecorderManager()
 const state = reactive({
 	isTalking: false, // 是否正在讲话
 	sendLock: false, // 语音是否发送锁，true-不发送，false-发送（用于上滑取消发送）
-	record: null, // 语音对象
+	// record: null, // 语音对象
 	startPoint: {} //记录长按录音开始点信息,用于后面计算滑动距离。
 })
 
@@ -55,11 +56,11 @@ const onStart = () => {
 	console.log('start')
 	state.isTalking = true
 	// uni.vibrateShort() // 震动
-	state.record.start(option)
-	state.record.onStart((res) => {
+	record.start(option)
+	record.onStart((res) => {
 		console.log('start', res)
 	})
-	state.record.onError((res) => {
+	record.onError((res) => {
 		console.log('录音错误事件：', res)
 	})
 }
@@ -69,8 +70,8 @@ const onStart = () => {
  */
 const onEnd = () => {
 	state.isTalking = false
-	state.record.stop()
-	state.record.onStop((res) => {
+	record.stop()
+	record.onStop((res) => {
 		console.log(res, '录音回调地址')
 		if (state.sendLock) {
 			state.sendLock = false // 恢复锁状态
@@ -115,7 +116,7 @@ const handleRecordMove = (e) => {
 }
 
 onLoad(() => {
-	state.record = uni.getRecorderManager()
+	// state.record = uni.getRecorderManager()
 })
 </script>
 

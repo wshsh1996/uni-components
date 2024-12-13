@@ -1,26 +1,69 @@
 <template>
-	<view class="type-select">
-		<text class="mr-20" @click="type = 'base'">基础录音组件</text>
-		<text @click="type = 'chat'">聊天语音组件</text>
-	</view>
-	<view v-if="type === 'base'">
-		<record></record>
-	</view>
-	<view v-if="type === 'chat'">
-		<chatRecord></chatRecord>
+	<view class="sound-recording">
+		<view class="time"
+			>{{ state.status == 0 ? '录音时长' : state.status == 3 ? '录音已完成' : '正在录音中' }}：{{
+				state.time
+			}}
+			秒</view
+		>
+		<view class="btn">
+			<view :class="state.status == 3 ? 'show' : 'hide'" @click="reset" hover-class="jump-hover"
+				>重新录制</view
+			>
+			<view
+				:class="state.status == 3 && state.playStatus == 0 ? 'show' : 'hide'"
+				@click="bofang"
+				hover-class="jump-hover"
+			>
+				{{ state.playStatus == 1 ? '录音播放中' : '播放录音' }}
+			</view>
+		</view>
+		<view class="progress">
+			<text class="txt"
+				>最大录音时长（{{ state.duration / 1000 }}秒 = {{ state.duration / 60000 }}分钟）</text
+			>
+			<progress
+				:percent="state.time * (100 / (duration / 1000))"
+				border-radius="10"
+				color="green"
+				stroke-width="10"
+				backgroundColor="#fff"
+			/>
+		</view>
+		<view class="anniu">
+			<view
+				:class="state.status == 0 ? 'row' : 'no-clicking'"
+				@click="kaishi"
+				hover-class="jump-hover"
+				>开始</view
+			>
+			<view
+				:class="state.status == 1 ? 'row' : 'no-clicking'"
+				@click="zanting"
+				hover-class="jump-hover"
+				>暂停</view
+			>
+			<view
+				:class="state.status == 2 ? 'row' : 'no-clicking'"
+				@click="jixu"
+				hover-class="jump-hover"
+				>继续</view
+			>
+			<view
+				:class="state.status == 1 || state.status == 2 ? 'row' : 'no-clicking'"
+				@click="tingzhi"
+				hover-class="jump-hover"
+				>停止</view
+			>
+		</view>
 	</view>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
-import record from '@/components/record.vue'
-import chatRecord from '@/components/chatRecord.vue'
-
 let recorderManager = uni.getRecorderManager()
 const innerAudioContext = uni.createInnerAudioContext()
 let init
-
-const type = ref('base')
 
 const state = reactive({
 	time: 0, //录音时长
@@ -153,14 +196,6 @@ const reset = () => {
 </script>
 
 <style>
-.type-select {
-	padding-top: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: red;
-}
-
 .sound-recording {
 	background-color: rgb(234, 234, 234);
 	margin: 10rpx 30rpx;

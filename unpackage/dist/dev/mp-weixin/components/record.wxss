@@ -1,11 +1,4 @@
 
-.type-select {
-	padding-top: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: red;
-}
 .sound-recording {
 	background-color: rgb(234, 234, 234);
 	margin: 10rpx 30rpx;

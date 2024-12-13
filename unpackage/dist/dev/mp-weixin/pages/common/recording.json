@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "recording",
-  "usingComponents": {}
+  "usingComponents": {
+    "record": "../../components/record",
+    "chat-record": "../../components/chatRecord"
+  }
 }
